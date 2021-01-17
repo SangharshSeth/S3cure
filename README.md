@@ -1,4 +1,4 @@
-# blackh0le
+# S3cure
 Stupid python based password manager (CLI)
 
 ## Installation
