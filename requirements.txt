@@ -7,6 +7,7 @@ mysqlclient==2.0.3
 pycodestyle==2.6.0
 pyfiglet==0.8.post1
 pylint==2.6.0
+python-dotenv==0.15.0
 six==1.15.0
 toml==0.10.2
 wrapt==1.12.1
