@@ -1,9 +1,14 @@
 #!/usr/bin/env python
-from MySQLdb import _mysql
 import argparse
 import pyfiglet
+import os
+from MySQLdb import _mysql
+from os.path import join, dirname
+from dotenv import load_dotenv
 
-
+# * Load env variables
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 # * parse the command line arguments
 parser = argparse.ArgumentParser(description='A simple Password Manager')
 parser.add_argument('-s', '--site', type=str, metavar='',
@@ -32,10 +37,9 @@ if args.banner:
     bannerArt = pyfiglet.figlet_format(
         'blackh0le', font='ogre')
     print(bannerArt + "Developer: Sangharsh" + " | " + "Version: 0.0.5")
-
 # * Connect to the Database
 connector = _mysql.connect(
-    host='localhost', user='sangharsh', passwd='sethDg@mer007', db='password_manager')
+    host=os.getenv('HOST'), user=os.getenv('UNAME'), passwd=os.getenv('PASSWORD'), db=os.getenv('DATABASE'))
 
 
 # * adding userid and password to database
@@ -50,6 +54,7 @@ def addAccount(uname, pword, usite):
     except _mysql.Error as error:
         print("Sorry Could not add your Account :(" + error)
 
+
 # * getting password from database
 def retrievePassword(usite):
     userInputSite = usite
@@ -63,21 +68,24 @@ def retrievePassword(usite):
     return results
 
 
-# * Execute required function
-finalResult = {}
-if args.mode == 'get':
-    finalResult = retrievePassword(args.site)
+if __name__ == "__main__":
+    # * Execute required function
+    finalResult = {}
+    if args.mode == 'get':
+        finalResult = retrievePassword(args.site)
 
-if args.mode == 'add':
-    addAccount(args.username, args.password, args.site)
+    if args.mode == 'add':
+        addAccount(args.username, args.password, args.site)
 
-# * Display output
-if args.mode == 'get':
-    if args.quiet:
-        print(f"USERNAME :: {finalResult[0]['username'].decode()}")
-        print(f"PASSWORD :: {finalResult[0]['password'].decode()}")
-    elif args.verbose:
-        print(f"USERNAME IS -> {finalResult[0]['username'].decode('UTF-8')}")
-        print(f"PASSWORD IS -> {finalResult[0]['password'].decode('UTF-8')}")
-    else:
-        pass
+    # * Display output
+    if args.mode == 'get':
+        if args.quiet:
+            print(f"USERNAME :: {finalResult[0]['username'].decode()}")
+            print(f"PASSWORD :: {finalResult[0]['password'].decode()}")
+        elif args.verbose:
+            print(
+                f"USERNAME IS -> {finalResult[0]['username'].decode('UTF-8')}")
+            print(
+                f"PASSWORD IS -> {finalResult[0]['password'].decode('UTF-8')}")
+        else:
+            pass
