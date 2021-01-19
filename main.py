@@ -67,9 +67,8 @@ def retrievePassword(usite):
 		print("Sorry I could not get your Password :(" + error)
 	return results
 
-
-if __name__ == "__main__":
 	# * Execute required function
+if __name__ == "__main__":
 	finalResult = {}
 	if args.mode == 'get':
 		finalResult = retrievePassword(args.site)
