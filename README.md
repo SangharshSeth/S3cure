@@ -12,7 +12,20 @@ pip install -r requirements.txt
 ## Usage
 
 ```bash
-./main.py -h # to get help and see the options
+$ ./main.py -h
+usage: main.py [-h] [-s] [-b] [-m] [-u] [-p] [-q | -v]
+
+A simple Password Manager
+
+optional arguments:
+  -h, --help        show this help message and exit
+  -s , --site       The website you want to retrieve credentials for
+  -b, --banner      display banner
+  -m , --mode       Speficy operation mode, add for entry or get for retrieval
+  -u , --username   your username or email
+  -p , --password   your password
+  -q, --quiet       print no additional messages
+  -v, --verbose     print verbose output
 ```
 
 ## Contributing
